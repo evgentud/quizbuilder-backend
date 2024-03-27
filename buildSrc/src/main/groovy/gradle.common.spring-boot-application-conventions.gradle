@@ -1,0 +1,43 @@
+plugins {
+    // Apply the common convention plugin for shared build configuration between library and application projects.
+    id 'gradle.common.java-common-conventions'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+bootJar {
+    enabled = true
+    // omit version number in jar file name
+    archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+ext {
+    set('springCloudVersion', '2023.0.0')
+}
+
+dependencies {
+    // spring
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // own libs
+    implementation project(':shared:common-api')
+
+    // utils
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}

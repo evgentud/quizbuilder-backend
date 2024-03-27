@@ -1,0 +1,14 @@
+plugins {
+	id 'gradle.common.spring-boot-application-conventions'
+}
+
+group = 'dev.tudos.quizbuilder'
+version = '0.0.1'
+
+dependencies {
+
+}
+
+dependencyManagement {
+
+}
