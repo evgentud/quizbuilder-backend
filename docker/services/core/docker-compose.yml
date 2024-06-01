@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  core:
+    container_name: quizty-core
+    command: java -jar app.jar
+    image: openjdk:21-jdk-slim
+    working_dir: /app
+    volumes:
+      - ../../../services/core/build/libs/core.jar:/app/app.jar
+    environment:
+      SERVER_PORT: ${SERVER_PORT}
+    healthcheck:
+      test: "curl --fail --silent localhost:${SERVER_PORT}/actuator/health | grep UP || exit 1"
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    name: backend_network
+    driver: bridge
