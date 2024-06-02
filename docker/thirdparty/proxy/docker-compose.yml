@@ -5,9 +5,9 @@ services:
     container_name: reverse_proxy
     image: nginx:stable-alpine
     volumes:
-      - ./nginx/templates:/etc/nginx/templates
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/proxy.conf:/etc/nginx/proxy.conf
+      - ./nginx/templates:/etc/nginx/templates:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/proxy.conf:/etc/nginx/proxy.conf:ro
     environment:
       - AUTH_HOST=${AUTH_HOST}
       - FRONTEND_HOST=${FRONTEND_HOST}
@@ -37,6 +37,6 @@ networks:
 
 secrets:
   ssl_cert:
-    file: certs/site.crt
+    file: ../../../scripts/certificates/site.crt
   ssl_key:
-    file: certs/site.key
+    file: ../../../scripts/certificates/site.key

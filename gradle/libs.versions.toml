@@ -1,9 +1,11 @@
 [versions]
-junit-jupiter = "5.10.2"
-spring-boot-gradle-plugin = "3.2.4"
+spring-boot-gradle-plugin = "3.2.6"
+spring-boot-starter = "3.2.6"
 spring-gradle-dependency-management-plugin = "1.1.4"
+junit-jupiter = "5.10.2"
 
 [libraries]
+spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security", version.ref = "spring-boot-starter" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher"}
