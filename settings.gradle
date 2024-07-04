@@ -2,5 +2,10 @@ rootProject.name = 'quizbuilder-backend'
 
 include(
         ':shared:common-api',
+        ':shared:common-api-spring-boot-autoconfigure',
+        ':shared:common-api-spring-boot-starter',
         ':services:core'
 )
+
+findProject(':shared:common-api-spring-boot-autoconfigure')?.name = 'common-api-spring-boot-autoconfigure'
+findProject(':shared:common-api-spring-boot-starter')?.name = 'common-api-spring-boot-starter'

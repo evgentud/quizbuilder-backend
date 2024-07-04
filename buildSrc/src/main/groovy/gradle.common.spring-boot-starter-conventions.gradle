@@ -1,0 +1,34 @@
+plugins {
+    id 'gradle.common.java-common-conventions'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'maven-publish'
+    id 'java-library'
+}
+
+dependencies {
+    // spring
+    implementation 'org.springframework.boot:spring-boot-starter'
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = "sources"
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            artifact sourceJar
+        }
+    }
+}

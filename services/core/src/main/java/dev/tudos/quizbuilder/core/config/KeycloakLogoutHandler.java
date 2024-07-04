@@ -2,8 +2,9 @@ package dev.tudos.quizbuilder.core.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -12,9 +13,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+/**
+ * Logout handler for Keycloak.
+ */
+@Slf4j
 @Component
+@ConditionalOnBean(SecurityAutoConfiguration.class)
 public class KeycloakLogoutHandler implements LogoutHandler {
-    private static final Logger logger = LoggerFactory.getLogger(KeycloakLogoutHandler.class);
+    private static final String LOGOUT_URL = "/protocol/openid-connect/logout";
+
     private final RestTemplate restTemplate;
 
     public KeycloakLogoutHandler() {
@@ -28,18 +35,16 @@ public class KeycloakLogoutHandler implements LogoutHandler {
     }
 
     private void logoutFromKeycloak(OidcUser user) {
-        String endSessionEndpoint = user.getIssuer() + "/protocol/openid-connect/logout";
+        String endSessionEndpoint = user.getIssuer() + LOGOUT_URL;
         UriComponentsBuilder builder = UriComponentsBuilder
           .fromUriString(endSessionEndpoint)
           .queryParam("id_token_hint", user.getIdToken().getTokenValue());
 
-        ResponseEntity<String> logoutResponse = restTemplate.getForEntity(
-        builder.toUriString(), String.class);
+        ResponseEntity<String> logoutResponse = restTemplate.getForEntity(builder.toUriString(), String.class);
         if (logoutResponse.getStatusCode().is2xxSuccessful()) {
-            logger.info("Successfulley logged out from Keycloak");
+            log.debug("Successfully logged out from Keycloak");
         } else {
-            logger.error("Could not propagate logout to Keycloak");
+            log.error("Could not propagate logout to Keycloak");
         }
     }
-
 }

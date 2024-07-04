@@ -1,6 +1,8 @@
 package dev.tudos.quizbuilder.core.config;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -12,11 +14,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
+/**
+ * Security configuration for the application.
+ */
 @Configuration
+@ConditionalOnBean(SecurityAutoConfiguration.class)
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    private LogoutHandler keycloakLogoutHandler;
+    private final LogoutHandler keycloakLogoutHandler;
 
     public SecurityConfig(KeycloakLogoutHandler keycloakLogoutHandler) {
         this.keycloakLogoutHandler = keycloakLogoutHandler;
@@ -43,5 +49,4 @@ public class SecurityConfig {
                 .logout(logout -> logout.addLogoutHandler(keycloakLogoutHandler).logoutSuccessUrl("/"));
         return http.build();
     }
-
 }

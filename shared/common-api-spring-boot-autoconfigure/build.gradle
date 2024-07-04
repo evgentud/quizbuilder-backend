@@ -1,0 +1,23 @@
+plugins {
+    id 'gradle.common.spring-boot-autoconfigure-conventions'
+}
+
+group = 'dev.tudos.quizbuilder'
+version = '1.0.0'
+
+dependencies {
+    // spring
+    compileOnly 'org.springframework.boot:spring-boot-starter-web'
+
+    // libraries
+    implementation(libs.jackson.databind)
+    implementation(libs.jackson.datatype.jsr310)
+
+    // custom libraries
+    implementation project(':shared:common-api')
+
+    // test
+    testRuntimeOnly(libs.jackson.core)
+    testCompileOnly(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
+}

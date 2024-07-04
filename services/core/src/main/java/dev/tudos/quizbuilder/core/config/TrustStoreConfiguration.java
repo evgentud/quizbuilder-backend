@@ -8,20 +8,30 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
 
+/**
+ * Trust store override configuration from application properties.
+ * This configuration is used to override the default trust store configuration
+ * with the one provided in the application properties file.
+ * This is useful when the application needs to connect to a service that uses a self-signed certificate.
+ * In this case, the trust store file and password should be provided in the application properties file.
+ * The trust store file should be placed in the resources folder.
+ * The trust store password should be provided in the application properties file.
+ */
 @ConditionalOnProperty(value = "javax.net.ssl.trust-store")
 @Configuration
 public class TrustStoreConfiguration {
-    private final Environment env;
+    private final Environment environment;
 
-    public TrustStoreConfiguration(Environment env) {
-        this.env = env;
+    public TrustStoreConfiguration(Environment environment) {
+        this.environment = environment;
     }
 
     @PostConstruct
     private void configureTrustStore() throws IOException {
-        String trustStorePath = new ClassPathResource(env.getProperty("javax.net.ssl.trust-store")).getFile().getAbsolutePath();
+        String trustStorePath = new ClassPathResource(environment.getProperty("javax.net.ssl.trust-store"))
+                .getFile().getAbsolutePath();
         System.setProperty("javax.net.ssl.trustStore", trustStorePath);
-        System.setProperty("javax.net.ssl.trustStorePassword",env.getProperty("javax.net.ssl.trust-store-password"));
+        System.setProperty("javax.net.ssl.trustStorePassword",
+                environment.getProperty("javax.net.ssl.trust-store-password"));
     }
-
 }

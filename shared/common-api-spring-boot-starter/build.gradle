@@ -1,0 +1,10 @@
+plugins {
+    id 'gradle.common.spring-boot-starter-conventions'
+}
+
+group = 'dev.tudos.quizbuilder'
+version = '1.0.0'
+
+dependencies {
+    implementation(project(':shared:common-api-spring-boot-autoconfigure'))
+}

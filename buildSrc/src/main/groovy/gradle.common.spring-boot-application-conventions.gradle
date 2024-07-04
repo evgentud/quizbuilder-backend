@@ -28,7 +28,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // own libs
-    implementation project(':shared:common-api')
+    implementation project(':shared:common-api-spring-boot-starter')
 
     // utils
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'

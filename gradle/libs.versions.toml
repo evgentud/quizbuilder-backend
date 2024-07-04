@@ -3,6 +3,8 @@ spring-boot-gradle-plugin = "3.2.6"
 spring-boot-starter = "3.2.6"
 spring-gradle-dependency-management-plugin = "1.1.4"
 junit-jupiter = "5.10.2"
+jackson = "2.17.1"
+lombok = "1.18.32"
 
 [libraries]
 spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security", version.ref = "spring-boot-starter" }
@@ -11,5 +13,9 @@ junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", vers
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher"}
 spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot-gradle-plugin" }
 spring-gradle-dependency-management-plugin = { module = "io.spring.gradle:dependency-management-plugin", version.ref = "spring-gradle-dependency-management-plugin" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
 
 [plugins]
