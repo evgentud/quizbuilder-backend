@@ -1,6 +1,10 @@
 # Quizty
 
 ## Local deployment
+### 1. Requirements:
+- Docker Compose version 2.20 and later, and Docker Desktop version 4.22 and later
+- JDK 21
+
 ### 1. Generate SSL certificates for local development using script:
 Linux:
 ```bash
@@ -38,9 +42,9 @@ docker-compose --env-file .env.local up
 
 ```bash
 cd docker/proxy
-docker-compose --env-file .env.local.dev up
+docker-compose --env-file .env.local up
 ```
 
 use `--env-file .env.local` if you are running backend and frontend in docker\
 use `--env-file .env.local.dev` if you are running backend and frontend on the host machine\
-Change the `BACKEND_HOST` and `FRONTEND_HOST` variables in the `.env.local.dev` file to the host machine IP address
+Change the `BACKEND_HOST` and `FRONTEND_HOST` variables in the `docker/thirdparty/proxy/.env.local.dev` file to the host machine IP address

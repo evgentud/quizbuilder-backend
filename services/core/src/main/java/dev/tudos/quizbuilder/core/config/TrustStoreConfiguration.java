@@ -4,7 +4,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
 
@@ -28,8 +28,7 @@ public class TrustStoreConfiguration {
 
     @PostConstruct
     private void configureTrustStore() throws IOException {
-        String trustStorePath = new ClassPathResource(environment.getProperty("javax.net.ssl.trust-store"))
-                .getFile().getAbsolutePath();
+        String trustStorePath = ResourceUtils.getURL(environment.getProperty("javax.net.ssl.trust-store")).getPath();
         System.setProperty("javax.net.ssl.trustStore", trustStorePath);
         System.setProperty("javax.net.ssl.trustStorePassword",
                 environment.getProperty("javax.net.ssl.trust-store-password"));

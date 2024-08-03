@@ -1,21 +1,28 @@
 [versions]
+spring-gradle-dependency-management-plugin = "1.1.4"
 spring-boot-gradle-plugin = "3.2.6"
 spring-boot-starter = "3.2.6"
-spring-gradle-dependency-management-plugin = "1.1.4"
-junit-jupiter = "5.10.2"
 jackson = "2.17.1"
+flyway = "10.16.0"
+postgresql = "42.7.3"
 lombok = "1.18.32"
+junit-jupiter = "5.10.2"
+testcontainers-bom = "1.20.0"
 
 [libraries]
-spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security", version.ref = "spring-boot-starter" }
-junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
-junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
-junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher"}
-spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot-gradle-plugin" }
 spring-gradle-dependency-management-plugin = { module = "io.spring.gradle:dependency-management-plugin", version.ref = "spring-gradle-dependency-management-plugin" }
-lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot-gradle-plugin" }
+spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security", version.ref = "spring-boot-starter" }
 jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
 jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
+flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher"}
+testcontainers-bom = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers-bom" }
 
 [plugins]
