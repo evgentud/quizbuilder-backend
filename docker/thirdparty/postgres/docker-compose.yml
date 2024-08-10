@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   postgres:
     image: postgres:16.3-alpine
@@ -7,8 +5,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./sql/create_databases.sql:/docker-entrypoint-initdb.d/create_databases.sql
     environment:
-      POSTGRES_USER: "${POSTGRES_USER_BACKEND}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD_BACKEND}"
+      POSTGRES_USER: ${POSTGRES_USER_BACKEND}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_BACKEND}
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER_BACKEND}", "-d", "postgres" ]
     restart: always

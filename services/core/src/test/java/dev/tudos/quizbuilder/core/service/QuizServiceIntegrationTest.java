@@ -1,5 +1,6 @@
 package dev.tudos.quizbuilder.core.service;
 
+import dev.tudos.quizbuilder.core.base.AbstractContainerBaseTest;
 import dev.tudos.quizbuilder.core.entity.QuizAnswerEntity;
 import dev.tudos.quizbuilder.core.entity.QuizCategoryEntity;
 import dev.tudos.quizbuilder.core.entity.QuizEntity;
@@ -11,17 +12,23 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.context.ImportTestcontainers;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 // TODO: refactor, add prepare data utils
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ImportTestcontainers(AbstractContainerBaseTest.class)
+@ActiveProfiles("noauth")
 class QuizServiceIntegrationTest {
     @Autowired
     private QuizService quizService;

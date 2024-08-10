@@ -1,29 +1,47 @@
-version: '3.9'
-
 services:
   core:
     container_name: quizty-core
-    command: java -jar app.jar
+    restart: on-failure
+    command:
+      - java
+      - -Djavax.net.ssl.trustStore=/run/secrets/keystore
+      - -Djavax.net.ssl.trustStorePassword=changeit
+      - -jar
+      - app.jar
     image: openjdk:21-jdk-slim
     working_dir: /app
     volumes:
       - ../../../services/core/build/libs/core.jar:/app/app.jar
+      - ./hosts:/etc/hosts
     environment:
       SERVER_PORT: ${SERVER_PORT_CORE}
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/qb_core
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER_BACKEND}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD_BACKEND}
+      KEYCLOAK_HOST: ${KEYCLOAK_HOST}
     healthcheck:
       test: "curl --fail --silent localhost:${SERVER_PORT_CORE}/actuator/health | grep UP || exit 1"
       interval: 30s
       timeout: 5s
       retries: 5
       start_period: 30s
+    secrets:
+      - keystore
     depends_on:
       - postgres
+      - reverse_proxy
+      - keycloak
     networks:
       - backend_network
       - postgres_network
+    links:
+      - "reverse_proxy:localhost" # maps 'localhost' to proxy host to access keycloak from the same domain in local dev environment
 
 networks:
   backend_network:
     name: backend_network
     driver: bridge
+
+secrets:
+  keystore:
+    file: ${KEYSTORE_PATH}

@@ -2,10 +2,11 @@
 
 ## Local deployment
 ### 1. Requirements:
-- Docker Compose version 2.20 and later, and Docker Desktop version 4.22 and later
 - JDK 21
+- Docker Compose version 2.20 and later, and Docker Desktop version 4.22 and later
+- Docker (for running integration tests and local deployment)
 
-### 1. Generate SSL certificates for local development using script:
+### 2. Generate SSL certificates for local development using script:
 Linux:
 ```bash
 cd ./scripts
@@ -17,7 +18,7 @@ Windows:
 cd .\scripts
 generate_ssl_certs.bat
 ```
-### 2. Create keystores for local development using script:
+### 3. Create keystores for local development using script:
 
 Linux:
 ```bash
@@ -31,20 +32,29 @@ cd .\scripts
 create_keystore.bat
 ```
 
-### 3. Run the keycloak server using docker-compose:
+### 4. Run the keycloak server using docker-compose:
 
 ```bash
 cd docker/thirdparty/keycloak
-docker-compose --env-file .env.local up
+docker-compose --env-file .env.local.dev up
 ```
 
-### 4. Run the proxy server using docker-compose:
+### 5. Run the proxy server using docker-compose:
 
 ```bash
 cd docker/proxy
-docker-compose --env-file .env.local up
+docker-compose --env-file .env.local.dev up
 ```
 
 use `--env-file .env.local` if you are running backend and frontend in docker\
 use `--env-file .env.local.dev` if you are running backend and frontend on the host machine\
 Change the `BACKEND_HOST` and `FRONTEND_HOST` variables in the `docker/thirdparty/proxy/.env.local.dev` file to the host machine IP address
+
+### 6. Building project
+```
+./gradlew clean build
+```
+
+### Keycloack config
+Keycload admin URL: https://localhost:8443/auth/admin/
+Username/password: admin/admin

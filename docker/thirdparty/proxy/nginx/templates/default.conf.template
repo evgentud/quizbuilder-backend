@@ -6,7 +6,7 @@ server {
 }
 
 server {
-    listen              443 ssl default_server;
+    listen              ${EXPOSE_PORT_HTTPS} ssl default_server;
     ssl_certificate     /run/secrets/ssl_cert;
     ssl_certificate_key /run/secrets/ssl_key;
     ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;

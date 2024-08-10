@@ -1,6 +1,4 @@
-version: '3.9'
-
-services: 
+services:
   reverse_proxy:
     container_name: reverse_proxy
     image: nginx:stable-alpine
@@ -12,9 +10,10 @@ services:
       - AUTH_HOST=${AUTH_HOST}
       - FRONTEND_HOST=${FRONTEND_HOST}
       - BACKEND_HOST=${BACKEND_HOST}
+      - EXPOSE_PORT_HTTPS=${EXPOSE_PORT_HTTPS}
     ports: 
       - ${EXPOSE_PORT_HTTP}:80
-      - ${EXPOSE_PORT_HTTPS}:443
+      - ${EXPOSE_PORT_HTTPS}:${EXPOSE_PORT_HTTPS}
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost:80']
     secrets:
@@ -24,16 +23,6 @@ services:
     networks:
       - keycloak_network
       - backend_network
-
-networks:
-  keycloak_network:
-    name: keycloak_network
-    driver: bridge
-    external: true
-  backend_network:
-    name: backend_network
-    driver: bridge
-    external: true
 
 secrets:
   ssl_cert:

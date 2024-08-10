@@ -1,0 +1,5 @@
+include:
+    - ../thirdparty/postgres/docker-compose.yml
+    - ../thirdparty/keycloak/docker-compose.yml
+    - ../thirdparty/proxy/docker-compose.yml
+    - ../services/core/docker-compose.yml

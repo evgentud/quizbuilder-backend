@@ -20,7 +20,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: https://localhost:8443/auth/realms/quizty/protocol/openid-connect/certs
+          jwk-set-uri: ${KEYCLOAK_HOST:https://localhost:8443}/auth/realms/quizty/protocol/openid-connect/certs
       client:
         registration:
           keycloak:
@@ -30,7 +30,7 @@ spring:
             redirect-uri: https://localhost:8443/api/login/oauth2/code/keycloak
         provider:
           keycloak:
-            issuer-uri: https://localhost:8443/auth/realms/quizty
+            issuer-uri: ${KEYCLOAK_HOST:https://localhost:8443}/auth/realms/quizty
             user-name-attribute: preferred_username
 
 server:

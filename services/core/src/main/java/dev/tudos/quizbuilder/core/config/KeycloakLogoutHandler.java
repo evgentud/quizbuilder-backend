@@ -3,8 +3,7 @@ package dev.tudos.quizbuilder.core.config;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -18,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  */
 @Slf4j
 @Component
-@ConditionalOnBean(SecurityAutoConfiguration.class)
+@ConditionalOnProperty(name = "security.disabled", havingValue = "false", matchIfMissing = true)
 public class KeycloakLogoutHandler implements LogoutHandler {
     private static final String LOGOUT_URL = "/protocol/openid-connect/logout";
 

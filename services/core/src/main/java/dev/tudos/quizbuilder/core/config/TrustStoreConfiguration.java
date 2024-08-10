@@ -3,8 +3,10 @@ package dev.tudos.quizbuilder.core.config;
 import jakarta.annotation.PostConstruct;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 
@@ -18,6 +20,7 @@ import java.io.IOException;
  * The trust store password should be provided in the application properties file.
  */
 @ConditionalOnProperty(value = "javax.net.ssl.trust-store")
+@Profile("!prod")
 @Configuration
 public class TrustStoreConfiguration {
     private final Environment environment;
@@ -28,9 +31,15 @@ public class TrustStoreConfiguration {
 
     @PostConstruct
     private void configureTrustStore() throws IOException {
-        String trustStorePath = ResourceUtils.getURL(environment.getProperty("javax.net.ssl.trust-store")).getPath();
-        System.setProperty("javax.net.ssl.trustStore", trustStorePath);
-        System.setProperty("javax.net.ssl.trustStorePassword",
-                environment.getProperty("javax.net.ssl.trust-store-password"));
+        if (!StringUtils.hasText(System.getProperty("javax.net.ssl.trustStore"))) {
+            String trustStorePath = ResourceUtils.getURL(environment.getProperty("javax.net.ssl.trust-store"))
+                    .getPath();
+            System.setProperty("javax.net.ssl.trustStore", trustStorePath);
+        }
+
+        if (!StringUtils.hasText(System.getProperty("javax.net.ssl.trustStorePassword"))) {
+            System.setProperty("javax.net.ssl.trustStorePassword",
+                    environment.getProperty("javax.net.ssl.trust-store-password"));
+        }
     }
 }
